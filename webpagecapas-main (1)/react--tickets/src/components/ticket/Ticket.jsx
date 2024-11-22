@@ -59,27 +59,32 @@ const Ticket = () => {
                                         Canjear
                                     </button>
                                     {showQR[product.ticket_code] && (
-                                        <section className="blockQR">
-                                            <QRCode
-                                                value={product.ticket_code} // Código único de cada ticket
-                                                size={256}
-                                                bgColor="#282c34"
-                                                fgColor="#fff"
-                                                level="H"
-                                                style={{
-                                                    position: 'fixed',
-                                                    top: '50%',
-                                                    left: '50%',
-                                                    transform: 'translate(-50%, -50%)',
-                                                    zIndex: 9999,
-                                                }}
-                                            />
+                                       <section
+									   style={{
+										   position: 'fixed',
+										   top: '50%',
+										   left: '50%',
+										   transform: 'translate(-50%, -50%)',
+										   zIndex: 9999,
+										   backgroundColor: '#ffffff',
+										   padding: '20px',
+										   borderRadius: '16px',
+										   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+									   }}
+								   >
+									   <QRCode
+										   value={product.ticket_code} // Código único de cada ticket
+										   size={256}
+										   bgColor="#ffffff"
+										   fgColor="#000000"
+										   level="L"
+									   />
                                            <button
 											onClick={() => toggleQR(product.ticket_code)}
 											style={{
 												position: 'fixed',
 												top: '10%',
-												right: '10%',
+												right: '-50%',
 												zIndex: 9999,
 												color: '#fff', // Texto blanco
 												backgroundColor: '#264E52', // Fondo con color verde oscuro

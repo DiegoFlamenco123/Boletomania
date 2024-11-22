@@ -9,6 +9,7 @@ function ScannerQR() {
 		if (!!result) {
 			console.log(result?.text)
 			setScanned(true)
+			console.log("hay result",result)
 		}
 	}
 
@@ -22,6 +23,7 @@ function ScannerQR() {
 		<>
 			<div className={`blockScanner ${scanned ? 'hidden' : 'block'}`}>
 				<Reader onScan={handleScan} onError={handleError} />
+				
 			</div>
       <div className='flex flex-col'>
       <AiFillSmile size={150} className={`blockScanner ${scanned ? 'block' : 'hidden'}`} />
