@@ -7,116 +7,102 @@ import axios from 'axios'
 var prueba = []
 
 const Ticket = () => {
-	const navigate = useNavigate()
+    const [card, setCards] = useState([]); // Datos de tickets
+    const [showQR, setShowQR] = useState({}); // Controla la visibilidad de los QR
 
-	const [pasandoVariable, setPasandoVariable] = useState({
-		data: [prueba.title],
-	})
+    // Obtener datos de la API
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: 'http://localhost:8080/ticket/all',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        }).then((response) => {
+            console.log(response.data); // Verificar datos recibidos
+            setCards(response.data); // Actualizar estado con tickets
+        });
+    }, []);
 
-	const [card, setCards] = useState({
-		data: [],
-	})
+    // Alternar visibilidad del QR para un ticket específico
+    const toggleQR = (ticket_code) => {
+        setShowQR((prevState) => ({
+            ...prevState,
+            [ticket_code]: !prevState[ticket_code], // Alterna solo el QR del ticket correspondiente
+        }));
+    };
 
-	const [showQR, setShowQR] = useState({});
-	const toggleQR = (productId) => {
-		setShowQR(prevState => ({
-			...prevState,
-			[productId]: !prevState[productId]
-		}));
-	};
-
-	useEffect(() => {
-		axios({
-			method: 'get',
-			url: 'http://localhost:8080/ticket/all',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
-			},
-		}).then((response) => {
-			setCards(response.data)
-
-			prueba = response.data
-			console.log(response.data)
-		})
-	}, [])
-
-	return (
-		<>
-			{prueba.map((product) => (
-				<div className="flex flex-col bg-white h-full w-full rounded-xl border border-blue-900 shadow-md shadow-black/60 ">
-					<div className="text-end text-[0.6em]">
-						<p className="pr-[1em] pt-[0.5em]">{product.tier}</p>
-					</div>
-					<div className="flex">
-						<div className="flex h-full w-[100%] p-[1em]">
-							<img src="/src/assets/img/ticketImg.webp" alt="" />
-						</div>
-
-						<div className="flex flex-row items-center">
-							<div className="flex-1 flex-col pr-[1.5em] h-auto">
-								<h1 className="text-[0.8em] pb-[0.5em] xl:text-[1.5em]">{product.event}</h1>
-								<p className="text-[0.5em] xl:text-[0.7em] text-justify">{product.eventDate}</p>
-
-								<div className="flex flex-row justify-between items-center py-[1em]">
-									<div className="flex h-6 w-16 items-center">
-										<img src="/src/assets/img/fedecredito.png" alt="" />
-									</div>
-									<button
-										onClick={() => toggleQR(product.ticketNumber)}
-										className="w-20 h-6/ text-[1em] bg-[#264E52] text-white"
-									>
-										Canjear
-									</button>
-									<section className={showQR[product.ticketNumber] ? 'blockQR' : 'hidden'}>
-										<button
-											className={showQR[product.ticketNumber] ? 'QR' : 'hidden'}
-											onClick={() => toggleQR(product.ticketNumber)}
+    // Renderizar los tickets
+    return (
+        <>
+            {card.map((product) => (
+                <div
+                    key={product.ticket_code} // Asegurar clave única
+                    className="flex flex-col bg-white h-full w-full rounded-xl border border-blue-900 shadow-md shadow-black/60"
+                >
+                    <div className="text-end text-[0.6em]">
+                        <p className="pr-[1em] pt-[0.5em]">{product.tier}</p>
+                    </div>
+                    <div className="flex">
+                        <div className="flex h-full w-[100%] p-[1em]">
+                            <img src="/src/assets/img/ticketImg.webp" alt="" />
+                        </div>
+                        <div className="flex flex-row items-center">
+                            <div className="flex-1 flex-col pr-[1.5em] h-auto">
+                                <h1 className="text-[0.8em] pb-[0.5em] xl:text-[1.5em]">{product.event}</h1>
+                                <p className="text-[0.5em] xl:text-[0.7em] text-justify">{product.eventDate}</p>
+                                <div className="flex flex-row justify-between items-center py-[1em]">
+                                    <button
+                                        onClick={() => toggleQR(product.ticket_code)}
+                                        className="w-20 h-6/ text-[1em] bg-[#264E52] text-white"
+                                    >
+                                        Canjear
+                                    </button>
+                                    {showQR[product.ticket_code] && (
+                                        <section className="blockQR">
+                                            <QRCode
+                                                value={product.ticket_code} // Código único de cada ticket
+                                                size={256}
+                                                bgColor="#282c34"
+                                                fgColor="#fff"
+                                                level="H"
+                                                style={{
+                                                    position: 'fixed',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    zIndex: 9999,
+                                                }}
+                                            />
+                                           <button
+											onClick={() => toggleQR(product.ticket_code)}
 											style={{
 												position: 'fixed',
 												top: '10%',
 												right: '10%',
-												transform: 'translate(-50%, -50%)',
 												zIndex: 9999,
+												color: '#fff', // Texto blanco
+												backgroundColor: '#264E52', // Fondo con color verde oscuro
+												padding: '10px 20px', // Espaciado interno para hacer el botón más grande
+												border: 'none', // Sin borde
+												borderRadius: '8px', // Bordes redondeados
+												cursor: 'pointer', // Cambiar el cursor a "mano" al pasar por encima
+												fontSize: '14px', // Tamaño del texto
+												fontWeight: 'bold', // Hacer el texto negrita
 											}}
 										>
-											{' '}
-											<svg
-												className="h-8 w-8 text-gray-600"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											>
-												<line x1="18" y1="6" x2="6" y2="18" />
-												<line x1="6" y1="6" x2="18" y2="18" />
-											</svg>
-										</button>
-										<QRCode
-											className="border-[10px] p-1.6 border-white overflow-visible"
-											value={product.ticket_code}
-											size={256}
-											bgColor="#282c34"
-											fgColor="#fff"
-											level="H"
-											style={{
-												position: 'fixed',
-												top: '50%',
-												left: '50%',
-												transform: 'translate(-50%, -50%)',
-												zIndex: 9999,
-											}}
-										/>
-									</section>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			))}
-		</>
-	)
-}
+											Cerrar
+</button>
+                                        </section>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </>
+    );
+};
 
-export default Ticket
+export default Ticket;
