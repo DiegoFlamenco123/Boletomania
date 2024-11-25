@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ticket")
@@ -142,6 +144,14 @@ public class TicketController {
         }
     }
 
+
+    @GetMapping("/statistics")
+    public ResponseEntity<List<Map<String, Object>>> getTicketStatistics() {
+        List<Map<String, Object>> statistics = ticketService.getTicketStatistics();
+        return ResponseEntity.ok(statistics);
+    }
+
+
     @PatchMapping("/transfer")
     public ResponseEntity<?> transferTicket(@ModelAttribute @Valid transferTicketDTO transferTicket, BindingResult validations){
         User getUser = userService.findUserAuthenticated();
@@ -174,6 +184,7 @@ public class TicketController {
             }
         }
     }
+
 
 
 }

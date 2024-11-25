@@ -8,6 +8,7 @@ import com.example.api.models.entities.dtos.SaveTicketDTO;
 
 import java.security.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public interface TicketService {
     void save(SaveTicketDTO ticket) throws Exception;
@@ -22,5 +23,6 @@ public interface TicketService {
     void updateQR(QR qr, String id);
     Ticket findOneByCode(String id);
     Boolean updateTicketValid(String id);
+    List<Map<String, Object>> getTicketStatistics(); // Método para estadísticas
     void transferTicket(User newOwner, Ticket ticket);
 }

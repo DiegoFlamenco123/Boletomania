@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -119,8 +120,14 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Map<String, Object>> getTicketStatistics() {
+        // Llama al repositorio para obtener las estadísticas
+        return ticketRepository.getTicketStatistics();
+
+    @Override
     public void transferTicket(User newOwner, Ticket ticket) {
         ticket.setUser(newOwner);
         ticketRepository.save(ticket);
+
     }
 }
