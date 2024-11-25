@@ -7,6 +7,7 @@ import com.example.api.models.entities.User;
 import com.example.api.models.entities.dtos.MessageDTO;
 import com.example.api.models.entities.dtos.SaveTicketDTO;
 import com.example.api.models.entities.dtos.TicketDTO;
+import com.example.api.models.entities.dtos.transferTicketDTO;
 import com.example.api.services.TicketService;
 import com.example.api.services.TierService;
 import com.example.api.services.UserService;
@@ -140,5 +141,39 @@ public class TicketController {
             }
         }
     }
+
+    @PatchMapping("/transfer")
+    public ResponseEntity<?> transferTicket(@ModelAttribute @Valid transferTicketDTO transferTicket, BindingResult validations){
+        User getUser = userService.findUserAuthenticated();
+
+        if(getUser == null){
+            return new ResponseEntity<>(new MessageDTO("User doesnt exist"), HttpStatus.BAD_REQUEST);
+        }
+        else{
+            try{
+                System.out.println("estoy en transferticket: "+ transferTicket.getNewUserOwnerEmail());
+                User newUser = userService.findByEmail(transferTicket.getNewUserOwnerEmail());
+                System.out.println(newUser);
+                if (newUser == null){
+                    return new ResponseEntity<>(new MessageDTO("User you want to give the ticket doesnt exist"), HttpStatus.BAD_REQUEST);
+                }
+
+                Ticket ticket = ticketService.findOneByCode(transferTicket.getTicketID());
+                if (ticket == null){
+                    return new ResponseEntity<>(new MessageDTO("The ticket doesnt exist"), HttpStatus.BAD_REQUEST);
+                }
+
+                ticketService.transferTicket(newUser, ticket);
+                return new ResponseEntity<>(new MessageDTO("Ticket transfered"), HttpStatus.CREATED);
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                return new ResponseEntity<>(new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+
+            }
+        }
+    }
+
 
 }

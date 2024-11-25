@@ -22,4 +22,5 @@ public interface TicketService {
     void updateQR(QR qr, String id);
     Ticket findOneByCode(String id);
     Boolean updateTicketValid(String id);
+    void transferTicket(User newOwner, Ticket ticket);
 }

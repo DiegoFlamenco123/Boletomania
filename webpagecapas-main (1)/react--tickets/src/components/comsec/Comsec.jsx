@@ -11,8 +11,8 @@ const posts = [
       datetime: '2023-03-16',
       category: { title: 'Twitter', to: '#' },
       author: {
-        name: 'Kevin Escalante ',
-        role: 'Co-Founder / CTO',
+        name: 'Mike Towers ',
+        role: 'Co-Founder / Spotify',
         to: '#',
         imageSrc: 'https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg',
       },
@@ -27,8 +27,8 @@ const posts = [
         datetime: '2023-03-16',
         category: { title: 'Facebook', to: '#' },
         author: {
-          name: 'Kevin Escalante ',
-          role: 'Co-Founder / CTO',
+          name: 'Alejandro Vasquez ',
+          role: '',
           to: '#',
           imageSrc: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
         },
@@ -43,7 +43,7 @@ const posts = [
         datetime: '2023-03-16',
         category: { title: 'Facebook', to: '#' },
         author: {
-          name: 'Kevin Escalante ',
+          name: 'Mauricio Rosales ',
           role: 'Co-Founder / CTO',
           to: '#',
           imageSrc: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",

@@ -117,4 +117,10 @@ public class TicketServiceImpl implements TicketService {
 
         return Validate;
     }
+
+    @Override
+    public void transferTicket(User newOwner, Ticket ticket) {
+        ticket.setUser(newOwner);
+        ticketRepository.save(ticket);
+    }
 }
