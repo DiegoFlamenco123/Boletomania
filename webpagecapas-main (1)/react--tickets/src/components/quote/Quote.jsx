@@ -12,22 +12,21 @@ export default function Example() {
           <figure className="mt-10">
             <blockquote className="text-center text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
               <p>
-                “Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias
-                molestiae. Numquam corrupti in laborum sed rerum et corporis.”
+              Boletomanía ha transformado por completo la manera en que gestionamos eventos. Su plataforma es intuitiva y eficiente, facilitando la experiencia tanto para los organizadores como para los asistentes. ¡Un cambio que necesitábamos!
               </p>
             </blockquote>
             <figcaption className="mt-10">
               <img
                 className="mx-auto h-10 w-12 rounded-full"
-                src={perfil}
+                src="https://imageio.forbes.com/specials-images/imageserve/5bb22ae84bbe6f67d2e82e05/0x0.jpg?format=jpg&crop=1012,1013,x627,y129,safe&height=416&width=416&fit=bounds"
                 alt=""
               />
               <div className="mt-4 flex items-center justify-center space-x-3 text-base">
-                <div className="font-semibold text-gray-900">Kevin Escalante</div>
+                <div className="font-semibold text-gray-900">Jeff Bezos</div>
                 <svg viewBox="0 0 2 2" width={3} height={3} aria-hidden="true" className="fill-gray-900">
                   <circle cx={1} cy={1} r={1} />
                 </svg>
-                <div className="text-gray-600">CEO of Workcation</div>
+                <div className="text-gray-600">CEO of Amazon</div>
               </div>
             </figcaption>
           </figure>

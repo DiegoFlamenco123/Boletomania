@@ -119,6 +119,9 @@ function ScannerQR() {
             setStatus("");
             setScannedOnce(false); // Rehabilitar escaneo
             setScanning(true); // Volver a habilitar escaneo
+            setTimeout(() => {
+              window.location.reload(); // Refrescar la página después de 1 segundo
+          },);
           }}
         >
           Scan Another Code

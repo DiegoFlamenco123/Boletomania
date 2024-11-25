@@ -24,4 +24,5 @@ public interface TicketService {
     Ticket findOneByCode(String id);
     Boolean updateTicketValid(String id);
     List<Map<String, Object>> getTicketStatistics(); // Método para estadísticas
+    void transferTicket(User newOwner, Ticket ticket);
 }

@@ -118,9 +118,16 @@ public class TicketServiceImpl implements TicketService {
 
         return Validate;
     }
+
     @Override
     public List<Map<String, Object>> getTicketStatistics() {
         // Llama al repositorio para obtener las estadísticas
         return ticketRepository.getTicketStatistics();
+
+    @Override
+    public void transferTicket(User newOwner, Ticket ticket) {
+        ticket.setUser(newOwner);
+        ticketRepository.save(ticket);
+
     }
 }
