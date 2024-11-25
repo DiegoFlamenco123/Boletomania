@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ticket")
@@ -139,6 +141,12 @@ public class TicketController {
                 return new ResponseEntity<>(new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
+    }
+
+    @GetMapping("/statistics")
+    public ResponseEntity<List<Map<String, Object>>> getTicketStatistics() {
+        List<Map<String, Object>> statistics = ticketService.getTicketStatistics();
+        return ResponseEntity.ok(statistics);
     }
 
 }
