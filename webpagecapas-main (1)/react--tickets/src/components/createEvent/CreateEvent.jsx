@@ -194,7 +194,7 @@ console.log(padreTiempo)
                   onChange={(event) => setOrganiserSelectedOption(event.target.value)}
                 >
                   <option value="" selected readOnly >Seleccione una opción</option> 
-                  {organizer.map((product) => (
+                   {organizer.map((product) => (
                   <option value={product.code}>{product.organizer}</option>
                   ))}
                 </select>

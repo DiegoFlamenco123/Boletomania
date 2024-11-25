@@ -14,44 +14,50 @@ const Register = () => {
 
   async function onSubmit(e) {
     e.preventDefault();
-
+  
     const usernameVal = usernameRef.current.value;
     const emailVal = emailRef.current.value;
     const passwordVal = passwordRef.current.value;
-
+  
     if (!usernameVal || !passwordVal || !emailVal) {
       toast.error("Ingrese sus credenciales");
       return;
     }
-
+  
+    // Validación de contraseña
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; // Al menos una mayúscula, un número y 8 caracteres de larga
+    if (!passwordRegex.test(passwordVal)) {
+      toast.error("La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      return;
+    }
+  
     try {
       const response = await axios.post('http://localhost:8080/auth/signup', {
         email: emailVal,
         name: usernameVal,
         password: passwordVal,
-
       }, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      }
-      )
-
+      });
+  
       if (response.status === 201) {
         toast.success('Usuario Creado Exitosamente!', {
           position: toast.POSITION.TOP_CENTER
-      });
+        });
       }
     } catch (error) {
-
       const { response } = error;
-
+  
       let mess = "";
-
-      if (response.status === 401) mess = "Datos Erroneos, intente de nuevo";
-      else if (response.status === 400) mess = "Usuario Existente";
-      else if (response.status === 500) mess = "Error con el servidor";
-      else if (response.status === 404) mess = "Usuario inexistente";
+  
+      if (response?.status === 401) mess = "Datos Erroneos, intente de nuevo";
+      else if (response?.status === 400) mess = "Usuario Existente";
+      else if (response?.status === 500) mess = "Error con el servidor";
+      else if (response?.status === 404) mess = "Usuario inexistente";
       toast(mess, { type: "warning" });
     }
   }
